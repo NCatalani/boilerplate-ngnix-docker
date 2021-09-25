@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  server:
+    build:
+      context: .
+    environment:
+      PGUSER: web
+      PGPASSWORD: PA$$WD12
+      PGDATABASE: system
+      PGPORT: 5432
+      PGHOST: database
+    ports:
+      - "8008:8008"
+    depends_on:
+      - database
+  database:
+    image: postgres:13.4
+    environment:
+      POSTGRES_USER: web
+      POSTGRES_PASSWORD: PA$$WD12
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+# Define the volumes
+volumes:
+  pgdata:
